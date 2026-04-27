@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { getApiUrl } from "@/lib/api";
 
 interface Product { id: number; name: string; sku: string; current_price: number; cost_of_goods: number; stock_level: number; }
 
@@ -11,7 +12,7 @@ export default function ProductsPage() {
     const fetchProducts = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch("http://localhost:8000/api/products/", {
+        const res = await fetch(getApiUrl("/api/products/"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -28,7 +29,7 @@ export default function ProductsPage() {
   const handleAnalyze = async (productId: number) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:8000/api/products/${productId}/analyze`, {
+      const res = await fetch(getApiUrl(`/api/products/${productId}/analyze`), {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });

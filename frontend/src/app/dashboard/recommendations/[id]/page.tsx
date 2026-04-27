@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { getApiUrl } from "@/lib/api";
 import { useParams, useRouter } from "next/navigation";
 
 interface Recommendation { id: number; current_price: number; recommended_price: number; confidence_score: number; status: string; rationale: string; agent_outputs: string; }
@@ -16,7 +17,7 @@ export default function RecommendationDetail() {
     const fetchRec = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch(`http://localhost:8000/api/recommendations/${id}`, {
+        const res = await fetch(getApiUrl(`/api/recommendations/${id}`), {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Failed to fetch");
@@ -35,7 +36,7 @@ export default function RecommendationDetail() {
   const handleApprove = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:8000/api/recommendations/${id}/approve`, {
+      const res = await fetch(getApiUrl(`/api/recommendations/${id}/approve`), {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -53,7 +54,7 @@ export default function RecommendationDetail() {
     if (!rejectReason) return alert("Please provide a rejection reason");
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:8000/api/recommendations/${id}/reject`, {
+      const res = await fetch(getApiUrl(`/api/recommendations/${id}/reject`), {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

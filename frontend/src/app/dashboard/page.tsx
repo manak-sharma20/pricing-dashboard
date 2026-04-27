@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { getApiUrl } from "@/lib/api";
 
 export default function Dashboard() {
   const [stats, setStats] = useState({ products: 0, pending: 0, executed: 0 });
@@ -10,12 +11,12 @@ export default function Dashboard() {
       if (!token) return;
 
       try {
-        const prodRes = await fetch("http://localhost:8000/api/products/", {
+        const prodRes = await fetch(getApiUrl("/api/products/"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const products = await prodRes.json();
 
-        const recRes = await fetch("http://localhost:8000/api/recommendations/", {
+        const recRes = await fetch(getApiUrl("/api/recommendations/"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const recommendations = await recRes.json();

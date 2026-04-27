@@ -12,11 +12,15 @@ import audit
 
 app = FastAPI(title="Klypup Pricing Intelligence API")
 
-# Define allowed origins for local development
-origins = [
+import os
+
+# Define allowed origins
+default_origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+env_origins = os.getenv("CORS_ORIGINS", "").split(",")
+origins = [o.strip() for o in env_origins if o.strip()] + default_origins
 
 # Configure CORS middleware
 app.add_middleware(

@@ -9,7 +9,9 @@ from database import get_db
 import models
 from pydantic import BaseModel
 
-SECRET_KEY = "supersecretkey_for_klypup_dashboard"
+import os
+
+SECRET_KEY = os.getenv("SECRET_KEY", "supersecretkey_for_klypup_dashboard")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 

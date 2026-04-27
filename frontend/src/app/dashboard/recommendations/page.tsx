@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { getApiUrl } from "@/lib/api";
 import Link from "next/link";
 
 interface Recommendation { id: number; current_price: number; recommended_price: number; confidence_score: number; status: string; }
@@ -12,7 +13,7 @@ export default function RecommendationsList() {
     const fetchRecs = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch("http://localhost:8000/api/recommendations/", {
+        const res = await fetch(getApiUrl("/api/recommendations/"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { getApiUrl } from "@/lib/api";
 
 interface AuditLog { id: number; created_at: string; product_id: number; old_price: number; new_price: number; executed_by: number | null; recommendation_id: number | null; }
 
@@ -11,7 +12,7 @@ export default function AuditLog() {
     const fetchLogs = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch("http://localhost:8000/api/audit/", {
+        const res = await fetch(getApiUrl("/api/audit/"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
