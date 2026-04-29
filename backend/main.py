@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 import models
 
+print("Initializing database...")
 models.Base.metadata.create_all(bind=engine)
+print("Database initialized successfully.")
 
 import auth
 import products

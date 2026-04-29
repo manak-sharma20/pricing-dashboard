@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./sql_app.db")
+print(f"Connecting to database: {SQLALCHEMY_DATABASE_URL.split('@')[-1] if '@' in SQLALCHEMY_DATABASE_URL else 'SQLite'}")
 
 # If using PostgreSQL, we need to handle the 'postgres://' vs 'postgresql://' issue common in some platforms
 if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
