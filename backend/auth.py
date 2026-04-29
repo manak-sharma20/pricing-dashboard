@@ -8,7 +8,6 @@ from sqlalchemy.orm import Session
 from database import get_db
 import models
 from pydantic import BaseModel
-from seed import seed_database
 
 import os
 
@@ -39,6 +38,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 def get_password_hash(password: str) -> str:
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
@@ -109,8 +109,3 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 @router.post("/logout")
 def logout():
     return {"message": "Successfully logged out"}
-
-@router.get("/seed")
-def run_seed():
-    seed_database()
-    return {"message": "Database seeded successfully!"}
